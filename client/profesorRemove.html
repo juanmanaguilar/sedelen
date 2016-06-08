@@ -1,0 +1,23 @@
+<template name="profesorRemove">
+    <div class="alert alert-danger" role="alert">
+        <div class="media">
+
+                <a class="pull-left" href="#">
+                  <img class="media-object img-rounded" src="ava1.png" alt="{{data.nombre}}">
+                </a>
+
+            <div class="media-body">
+                <h4 class="media-heading">{{data.apellidos}}, {{data.nombre}}</h4>
+
+                <p>Categoría: {{data.categoria}}  Dedicación: {{data.dedicacion}}</p>
+                <p>Despacho: {{data.despacho}} Teléfono: {{data.telefTrabajo}} email: {{data.email}} _id: {{data._id}}</p>
+                
+            </div>
+            <div class="media-footer">
+                <p>El profesor será eliminado de la base de datos</p>
+                <a href="/personal"><button class="btn btn-warning">Cancelar</button></a>
+                <a href="/personal"><button class="btn btn-danger js-delete-profesor">Aceptar</button></a>
+            </div>  
+        </div>
+    </div>
+</template>

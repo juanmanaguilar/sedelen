@@ -1,0 +1,97 @@
+<template name="inventarioForm">
+    <form class="form-horizontal col-sm-11">
+      <label>DESCRIPCIÓN DEL ELEMENTO</label>
+      <div class="form-group">        
+        <label for="nInvent" class="col-sm-4 control-label">Nº DE INVENTARIO DE CENTRO: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="nInvent" placeholder="{{data.nInvent}}">
+        </div>
+        <label for="descElem" class="col-sm-4 control-label">DESCRIPCIÓN DEL BIEN: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="decElem" placeholder="{{data.articulo}}">
+        </div>
+        <label for="elemsElem" class="col-sm-4 control-label">ELEMENTOS QUE LO COMPONEN: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="elemsElem">
+        </div>
+        <label for="marca" class="col-sm-2 control-label">MARCA: </label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="marca">
+        </div>
+        <label for="modelo" class="col-sm-2 control-label">MODELO: </label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="modelo">
+        </div>
+        <label for="nSerie" class="col-sm-2 control-label">Nº DE SERIE: </label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="nSerie">
+        </div>
+      </div>
+    
+      <label>UBICACIÓN DEL ELEMENTO</label>
+      <div class="form-group">        
+        <label for="orgElem" class="col-sm-4 control-label">ORGÁNICA: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="orgElem" placeholder="0">
+        </div>
+        <label for="centroCoste" class="col-sm-4 control-label">CENTRO DE COSTE: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="centroCoste">
+        </div>
+        <label for="campus" class="col-sm-4 control-label">CAMPUS: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="campus" placeholder="Reina Mercedes">
+        </div>
+        <label for="edif" class="col-sm-2 control-label">EDIFICIO: </label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="edif" placeholder="E.T.S. de Ingeniería Informática">
+        </div>
+        <label for="planta" class="col-sm-2 control-label">PLANTA: </label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="planta">
+        </div>
+        <label for="local" class="col-sm-2 control-label">LOCAL: </label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="local">
+        </div>
+      </div>
+        
+      <label>INVESTIGACIÓN</label>
+      <div class="form-group">        
+        <label for="orgProy" class="col-sm-4 control-label">ORGÁNICA PPROYECTO: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="orgProy" placeholder="{{organica}}">
+        </div>
+        <label for="nProy" class="col-sm-4 control-label">Nº DE PROYECTO: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="nProy">
+        </div>
+        <label for="titProy" class="col-sm-4 control-label">TÍTULO DEL PROYECTO: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="titProy">
+        </div>
+      </div>
+      
+      <label>VALORACIÓN DEL ELEMENTO</label>
+      <div class="form-group">        
+        <label for="proveedor" class="col-sm-4 control-label">PROVEEDOR/TRANSMITIENTE: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="proveedor" placeholder="{{data.proveedor}}">
+        </div>
+        <label for="nFact" class="col-sm-4 control-label">Nº DE FACTURA: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="nFact" placeholder="{{data.nFact}}">
+        </div>
+        <label for="dateFact" class="col-sm-4 control-label">FECHA DE FACTURA: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="dateFact" placeholder="{{data.fechaFact}}">
+        </div>
+        <label for="precio" class="col-sm-4 control-label">PRECIO DE ADQUISICIÓN: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="precio">
+        </div>
+      </div>
+      
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</template>

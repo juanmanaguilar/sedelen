@@ -1,0 +1,48 @@
+<template name="listaInventario">
+    <div class="container">       
+        <div class="row col-xs-12 col-sm-10">
+            
+
+            <div class="row row-content">
+                <div class="col-xs-12 col-sm-8 col-lg-10">
+                    <h2>Inventario </h2><br>
+                    {{> searchBoxI}}
+                    
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <p style="padding:20px;"></p>
+                    
+                </div>
+           </div>   
+        </div> <!-- / row -->
+    </div>
+</template>
+<template name="searchBoxI">
+    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>{{> EasySearch.Input indexes=searchIndexes}}
+    <select class="sorting">
+        <option value="nInvent">Nº de inventario</option>
+        <option value="fechaFact">Fecha Factura</option>
+    </select>
+    <button type="button" class="btn btn-default btn-md js-add-prof">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo
+    </button>
+
+    <ul class="media-list">
+        {{#EasySearch.Each index=inventIndex }}
+        <br>
+        <div class="well">
+            <li class="media">  
+                <a class="pull-left" href="/inventario/{{this._id._str}}">
+                    <div class="media-body">
+                        <h4 class="media-heading">{{articulo}} Nº de inventario: {{nInvent}}</h4>
+                        <p>Fecha factura: {{fechaFact}}</p>
+                        <p>Profesor: {{profesor}}</p>
+                    </div>
+                </a>
+            </li>
+        </div>
+        {{/EasySearch.Each}}
+    </ul>
+    {{> EasySearch.LoadMore index=inventIndex content="Mostrar más"}}
+    
+</template>

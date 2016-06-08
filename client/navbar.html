@@ -1,0 +1,28 @@
+<template name="navbar">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                
+                <a class="navbar-brand" href="/"><img src="logolsi5.gif" height=35 width=35></a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="divider-vertical"></li>
+                    <li class="active"><a href="/personal">Personal</a></li>
+                    <li><a href="/inventario">Inventario</a></li>
+                    
+                </ul>
+                <ul class="nav navbar-nav pull-right">
+                    {{> loginButtons alingn="right"}}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</template>
