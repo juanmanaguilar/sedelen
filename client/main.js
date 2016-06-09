@@ -12,11 +12,11 @@ let
     }),
     inventIndex = new EasySearch.Index({
         collection: Inventario,
-        fields: ['nInvent','articulo', 'profesor'],
+        fields: ['nInvent','descElem', 'profesor'],
         defaultSearchOptions: {
             sortBy: 'nInvent'
           },
-        engine: new EasySearch.MongoDB({
+        engine: new EasySearch.Minimongo({
             sort: function (searchObject, options) {
               const sortBy = options.search.props.sortBy;
 
@@ -71,7 +71,12 @@ Router.route('/inventario/', function () {
 Router.route('/inventario/:_id', function(){
     console.log("Accediendo al documento: "+this.params._id);
     this.render('navbar', {to:"header"});
-    this.render('inventarioForm', {to:"main"});
+    this.render('inventarioEdit', {to:"main"});
+});
+Router.route('/inventario/trash/:_id', function(){
+    console.log("Accediendo al documento: "+this.params._id);
+    this.render('navbar', {to:"header"});
+    this.render('inventarioRemove', {to:"main"});
 });
 
 Template.listaPersonal.helpers({
@@ -99,7 +104,6 @@ Template.searchBoxI.helpers({
 Template.profesorRemove.events({
     'click .js-delete-profesor':function(event){
         var idP = new Meteor.Collection.ObjectID(Router.current().params._id);
-//        var idP = this._id
         console.log("Eliminando profesor _id: "+idP);
         Meteor.call("removeProfesor", idP);
     },
@@ -112,21 +116,21 @@ Template.profesorRemove.helpers({
     }
 }),
     
+Template.profesoresForm.rendered=function(){
+            $('.mydatepicker').datepicker({
+            format: "dd/mm/yyyy",
+            weekStart: 1,
+            maxViewMode: 3,
+            language: "es",
+            autoclose: true
+        });
+    },
+    
 Template.profesoresForm.helpers({
     data: function() {
         console.log("params _id: "+ Router.current().params._id);
-        var idPText = Router.current().params._id;
-        var idPObject = new Meteor.Collection.ObjectID(Router.current().params._id);
-        var idP = "";
- //       var idP = new Meteor.Collection.ObjectID(Router.current().params._id);
- //       if (Profesores.findOne({_id: idP})){
-        if (Profesores.findOne({_id: idPObject})){ //el _id es un Object
-            idP = idPObject;
-  //         return Profesores.findOne({_id: idPObject}); 
-        } else {                                    //el _id es normal
-//           return Profesores.findOne({_id: Router.current().params._id});
-            idP = idPText;
-        }
+        
+        var idP = new Meteor.Collection.ObjectID(Router.current().params._id);
         
         return Profesores.findOne({_id: idP});
         
@@ -176,20 +180,88 @@ Template.listaInventario.helpers({
 }),
     
 Template.listaInventario.events({
+  'click .js-show-inventarioForm':function(event){
+      $("#inventario_add_form").modal('show');
+  },
   'change .sorting': (e) => {
     inventIndex
       .getComponentMethods()
       .addProps('sortBy', $(e.target).val())
     ;
-  }
+  },
+    
+  
 }),
+    
+Template.inventarioForm.rendered=function(){
+            $('#fechaFact').datepicker({
+            format: "dd/mm/yyyy",
+            weekStart: 1,
+            maxViewMode: 3,
+            language: "es",
+            autoclose: true
+        });
+    },
     
 Template.inventarioForm.helpers({
     data: function() {
         console.log("en data");
         console.log("params _id: "+ Router.current().params._id);
-        var idP = new Meteor.Collection.ObjectID(Router.current().params._id);
-        console.log("idP: "+ idP);
-        return Inventario.findOne({_id: idP});
+        var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
+        console.log("idI: "+ idI);
+        return Inventario.findOne({_id: idI});
     }
-});
+}),
+Template.inventarioForm.events({
+    'submit .js-update-inventario':function(event){
+       event.preventDefault();
+        console.log("Inventario _id: "+ Router.current().params._id);
+        var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
+        console.log("Actualizando inventatio: "+event.target.nInvent.value+" "+event.target.descElem.value+" id: "+idI);
+
+       var invent = {
+           _id: idI,
+           nInvent: event.target.nInvent.value,
+           descElem: event.target.descElem.value,
+           elemsElem: event.target.elemsElem.value,
+           marca: event.target.marca.value,
+           modelo: event.target.modelo.value,
+           nSerie: event.target.nSerie.value,
+           orgElem: event.target.orgElem.value,
+           centroCoste: event.target.centroCoste.value,
+           campus: event.target.campus.value,
+           edif: event.target.edif.value,
+           planta: event.target.planta.value,
+           local: event.target.local.value,
+           orgProy: event.target.orgProy.value,
+           nProy: event.target.nProy.value,
+           titProy: event.target.titProy.value,
+           proveedor: event.target.proveedor.value,
+           nFact: event.target.nFact.value,
+           fechaFact: event.target.fechaFact.value,
+           precio: event.target.precio.value,
+           
+           unidad: event.target.unidad.value,
+           profesor: event.target.profesor.value,
+           dpt: event.target.dpt.value,
+           
+       };
+        console.log("Actuaizando inventario: "+invent);
+        Meteor.call("upsertInventario", idI, invent);
+    }
+}),
+    
+Template.inventarioRemove.events({
+    'click .js-delete-inventario':function(event){
+        var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
+        console.log("Eliminando inventario _id: "+idI);
+        Meteor.call("removeInventario", idI);
+    },
+}),
+Template.inventarioRemove.helpers({
+    data: function(){
+        var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
+        return Inventario.findOne({_id: idI});
+    }
+});   
+

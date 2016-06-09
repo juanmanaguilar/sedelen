@@ -1,0 +1,19 @@
+<template name="inventarioRemove">
+    <div class="alert alert-danger" role="alert">
+        <div class="media">
+
+            <div class="media-body">
+                <h4 class="media-heading">Nº: {{data.nInvent}}, {{data.articulo}}</h4>
+
+                <p>Profesor: {{data.profesor}}  Proveedor: {{data.proveedor}}</p>
+                <p>Fecha factura: {{data.fechaFact}} Nº de Factura: {{data.numFact}} _id: {{data._id}}</p>
+                
+            </div>
+            <div class="media-footer">
+                <p>El articulo será eliminado de la base de datos</p>
+                <a href="/inventario"><button class="btn btn-warning">Cancelar</button></a>
+                <a href="/inventario"><button class="btn btn-danger js-delete-inventario">Aceptar</button></a>
+            </div>  
+        </div>
+    </div>
+</template>

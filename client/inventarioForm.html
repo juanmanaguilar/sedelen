@@ -1,97 +1,122 @@
 <template name="inventarioForm">
-    <form class="form-horizontal col-sm-11">
-      <label>DESCRIPCIÓN DEL ELEMENTO</label>
-      <div class="form-group">        
-        <label for="nInvent" class="col-sm-4 control-label">Nº DE INVENTARIO DE CENTRO: </label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="nInvent" placeholder="{{data.nInvent}}">
+    <form class="form-horizontal col-sm-12 js-update-inventario">
+        <div class="well well-lg">
+          <label>DESCRIPCIÓN DEL ELEMENTO</label>
+          <div class="form-group">        
+            <label for="nInvent" class="col-sm-4 control-label">Nº DE INVENTARIO DE CENTRO: </label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="nInvent" placeholder="{{data.nInvent}}" value="{{data.nInvent}}">
+            </div>
+            <label for="descElem" class="col-sm-4 control-label">DESCRIPCIÓN DEL BIEN: </label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="descElem" placeholder="{{data.descElem}}" value="{{data.descElem}}">
+            </div>
+            <label for="elemsElem" class="col-sm-4 control-label">ELEMENTOS QUE LO COMPONEN: </label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="elemsElem" placeholder="{{data.elemsElem}}" value="{{data.elemsElem}}">
+            </div>
+            <label for="marca" class="col-sm-2 control-label">MARCA: </label>
+            <div class="col-sm-2">
+              <input type="text" class="form-control" id="marca" placeholder="{{data.marca}}" value="{{data.marca}}">
+            </div>
+            <label for="modelo" class="col-sm-2 control-label">MODELO: </label>
+            <div class="col-sm-2">
+              <input type="text" class="form-control" id="modelo" placeholder="{{data.modelo}}" value="{{data.modelo}}">
+            </div>
+            <label for="nSerie" class="col-sm-2 control-label">Nº DE SERIE: </label>
+            <div class="col-sm-2">
+              <input type="text" class="form-control" id="nSerie" placeholder="{{data.nSerie}}" value="{{data.nSerie}}">
+            </div>
+          </div>
         </div>
-        <label for="descElem" class="col-sm-4 control-label">DESCRIPCIÓN DEL BIEN: </label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="decElem" placeholder="{{data.articulo}}">
-        </div>
-        <label for="elemsElem" class="col-sm-4 control-label">ELEMENTOS QUE LO COMPONEN: </label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="elemsElem">
-        </div>
-        <label for="marca" class="col-sm-2 control-label">MARCA: </label>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" id="marca">
-        </div>
-        <label for="modelo" class="col-sm-2 control-label">MODELO: </label>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" id="modelo">
-        </div>
-        <label for="nSerie" class="col-sm-2 control-label">Nº DE SERIE: </label>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" id="nSerie">
-        </div>
-      </div>
-    
+        <div class="well well-lg">
       <label>UBICACIÓN DEL ELEMENTO</label>
       <div class="form-group">        
         <label for="orgElem" class="col-sm-4 control-label">ORGÁNICA: </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="orgElem" placeholder="0">
+          <input type="text" class="form-control" id="orgElem" placeholder="{{data.orgElem}}" value="{{data.orgElem}}">
         </div>
         <label for="centroCoste" class="col-sm-4 control-label">CENTRO DE COSTE: </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="centroCoste">
+          <input type="text" class="form-control" id="centroCoste" placeholder="{{data.centroCoste}}" value="{{data.centroCoste}}">
         </div>
         <label for="campus" class="col-sm-4 control-label">CAMPUS: </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="campus" placeholder="Reina Mercedes">
+          <input type="text" class="form-control" id="campus" placeholder="Reina Mercedes" value="{{data.campus}}">
         </div>
         <label for="edif" class="col-sm-2 control-label">EDIFICIO: </label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" id="edif" placeholder="E.T.S. de Ingeniería Informática">
+          <input type="text" class="form-control" id="edif" placeholder="E.T.S. de Ingeniería Informática" value="{{data.edif}}">
         </div>
         <label for="planta" class="col-sm-2 control-label">PLANTA: </label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" id="planta">
+          <input type="text" class="form-control" id="planta" placeholder="{{data.planta}}" value="{{data.planta}}">
         </div>
         <label for="local" class="col-sm-2 control-label">LOCAL: </label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" id="local">
+          <input type="text" class="form-control" id="local" placeholder="{{data.local}}" value="{{data.local}}">
         </div>
       </div>
-        
+        </div>
+        <div class="well well-lg">
       <label>INVESTIGACIÓN</label>
       <div class="form-group">        
         <label for="orgProy" class="col-sm-4 control-label">ORGÁNICA PPROYECTO: </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="orgProy" placeholder="{{organica}}">
+          <input type="text" class="form-control" id="orgProy" placeholder="{{data.orgProy}}" value="{{data.orgProy}}">
         </div>
         <label for="nProy" class="col-sm-4 control-label">Nº DE PROYECTO: </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="nProy">
+          <input type="text" class="form-control" id="nProy" placeholder="{{data.nProy}}" value="{{data.nProy}}">
         </div>
         <label for="titProy" class="col-sm-4 control-label">TÍTULO DEL PROYECTO: </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="titProy">
+          <input type="text" class="form-control" id="titProy" placeholder="{{data.titProy}}" value="{{data.titProy}}">
         </div>
       </div>
+            </div>
       
+            <div class="well well-lg">
       <label>VALORACIÓN DEL ELEMENTO</label>
       <div class="form-group">        
         <label for="proveedor" class="col-sm-4 control-label">PROVEEDOR/TRANSMITIENTE: </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="proveedor" placeholder="{{data.proveedor}}">
+          <input type="text" class="form-control" id="proveedor" placeholder="{{data.proveedor}}" value="{{data.proveedor}}">
         </div>
         <label for="nFact" class="col-sm-4 control-label">Nº DE FACTURA: </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="nFact" placeholder="{{data.nFact}}">
+          <input type="text" class="form-control" id="nFact" placeholder="{{data.nFact}}" value="{{data.nFact}}">
         </div>
         <label for="dateFact" class="col-sm-4 control-label">FECHA DE FACTURA: </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="dateFact" placeholder="{{data.fechaFact}}">
+          <input type="text" class="form-control" id="fechaFact" placeholder="{{data.fechaFact}}" value="{{data.fechaFact}}">
         </div>
         <label for="precio" class="col-sm-4 control-label">PRECIO DE ADQUISICIÓN: </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="precio">
+          <input type="text" class="form-control" id="precio" placeholder="{{data.precio}}" value="{{data.precio}}">
         </div>
       </div>
+            </div>
+        
+        <div class="well well-lg">
+      <label>Otros datos Departamento</label>
+      <div class="form-group">        
+        <label for="proveedor" class="col-sm-4 control-label">Unidad: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="unidad" placeholder="{{data.unidad}}" value="{{data.unidad}}">
+        </div>
+        <label for="nFact" class="col-sm-4 control-label">Profesor: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="profesor" placeholder="{{data.profesor}}" value="{{data.profesor}}">
+        </div>
+        <label for="dateFact" class="col-sm-4 control-label">DPT: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="dpt" placeholder="{{data.dpt}}" value="{{data.dpt}}">
+        </div>
+        
+      </div>
+            </div>
       
-      <button type="submit" class="btn btn-default">Submit</button>
+      <button type="submit" class="btn btn-warnig">Guardar</button>
     </form>
 </template>

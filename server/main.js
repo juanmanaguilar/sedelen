@@ -9,11 +9,11 @@ let
     }),
     inventIndex = new EasySearch.Index({
         collection: Inventario,
-        fields: ['nInvent','articulo', 'profesor'],
+        fields: ['nInvent','descElem', 'profesor'],
         defaultSearchOptions: {
             sortBy: 'nInvent'
           },
-        engine: new EasySearch.MongoDB({
+        engine: new EasySearch.Minimongo({
             sort: function (searchObject, options) {
               const sortBy = options.search.props.sortBy;
 
@@ -74,6 +74,17 @@ Meteor.methods({
     removeProfesor: function (profesorId){
         if (this.userId) {
           return Profesores.remove(profesorId);
+      }
+    },
+    
+    upsertInventario: function (inventarioId, data){
+        if (this.userId) {
+          return Inventario.upsert(inventarioId, data);
+      }
+    },
+    removeInventario: function (inventarioId){
+        if (this.userId) {
+          return Inventario.remove(inventarioId);
       }
     }
 });
