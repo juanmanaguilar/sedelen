@@ -44,9 +44,16 @@ Router.configure({
 
 Router.route('/', function () {
     console.log("Estamos en el /");
-    this.render('navbar', {to:"header"});
+    this.render('homeLogin', {to:"main"});
     
 });
+Router.route('/home/', function () {
+    console.log("Estamos en el /home");
+    this.render('navbar', {to:"header"});
+    this.render('home', {to:"main"});
+    
+});
+
 Router.route('/personal/', function () {
     console.log("Estamos en el /personal");
     this.render('navbar', {to:"header"});
@@ -78,6 +85,13 @@ Router.route('/inventario/trash/:_id', function(){
     this.render('navbar', {to:"header"});
     this.render('inventarioRemove', {to:"main"});
 });
+
+Template.navbar.helpers({
+      
+     email: function(){
+        return Meteor.user().emails[0].address;
+    }
+  }),  
 
 Template.listaPersonal.helpers({
 //       profesores: Profesores.find({}, {sort:{Apellidos: 1, Nombre: 1}})

@@ -23,3 +23,6 @@ accounts-ui
 easy:search
 iron:router
 rajit:bootstrap3-datepicker-es
+useraccounts:bootstrap
+useraccounts:iron-routing
+softwarerero:accounts-t9n

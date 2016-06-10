@@ -1,4 +1,8 @@
 <template name="profesoresForm">
+     {{> ensureSignedIn template="mostrarprofesoresForm"}}
+    {{> mostrarprofesoresForm}}
+</template>
+<template name="mostrarprofesoresForm">
     
             <form class="form-horizontal col-sm-10 js-update-profesor">
               <label>Datos</label>

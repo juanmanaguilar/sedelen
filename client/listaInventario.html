@@ -1,4 +1,8 @@
 <template name="listaInventario">
+     {{> ensureSignedIn template="mostrarlistaInventario"}}
+    {{> mostrarlistaInventario}}
+</template>
+<template name="mostrarlistaInventario">
     <div class="container">       
         <div class="row col-sm-12">
             
