@@ -1,6 +1,6 @@
 <template name="listaPersonal">
      {{> ensureSignedIn template="mostrarlistaPersonal"}}
-     {{> mostrarlistaPersonal}}
+     
 </template>
 <template name="mostrarlistaPersonal">
    
@@ -44,14 +44,21 @@
 
 <template name="searchBoxP">
     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>{{> EasySearch.Input indexes=searchIndexes }}
-    <button type="button" class="btn btn-default btn-md js-show-profesoresForm">
+<!--    <button type="button" class="btn btn-default btn-md js-show-profesoresForm">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo con modal
+    </button>
+-->
+    <a href="/personal/new">
+    <button type="button" class="btn btn-default btn-md">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo
     </button>
-
+    </a>
+<br>
     <ul class="media-list">
         {{#EasySearch.Each index=profIndex }}
-        <br>
+        
         <div class="well">
+            <div class="light-border">
             <li class="media">
                 
                     <a class="pull-left" href="/personal/{{this._id._str}}">
@@ -74,10 +81,10 @@
                 
                 </div>
             </li>
+            </div>
         </div>
         
         {{/EasySearch.Each}}
     </ul>
-    {{> EasySearch.LoadMore index=profIndex content="Mostrar más"}}
-    
+    {{> EasySearch.LoadMore index=profIndex content="Mostrar más"}}   
 </template>

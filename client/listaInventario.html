@@ -1,6 +1,6 @@
 <template name="listaInventario">
      {{> ensureSignedIn template="mostrarlistaInventario"}}
-    {{> mostrarlistaInventario}}
+    
 </template>
 <template name="mostrarlistaInventario">
     <div class="container">       
@@ -44,9 +44,15 @@
         <option value="nInvent">Nº de inventario</option>
         <option value="fechaFact">Fecha Factura</option>
     </select>
-    <button type="button" class="btn btn-default btn-md js-show-inventarioForm">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo
+<!--    <button type="button" class="btn btn-default btn-md js-show-inventarioForm">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo con modal
     </button>
+-->
+    <a href="/inventario/new">
+        <button type="button" class="btn btn-default btn-md">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo
+        </button>
+    </a>
 
     <ul class="media-list">
         {{#EasySearch.Each index=inventIndex }}

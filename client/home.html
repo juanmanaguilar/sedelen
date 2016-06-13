@@ -1,7 +1,12 @@
 <template name="home">
+     {{> ensureSignedIn template="mostrarHome"}}
+    
+</template>
+<template name="mostrarHome">
   <div class="container">   
     <div class="text-center">
       <h4>Bienvanido a sedelen</h4>
+        {{> atNavButton}}
         
     </div>
   </div>

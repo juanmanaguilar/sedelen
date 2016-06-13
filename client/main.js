@@ -43,8 +43,8 @@ Router.configure({
 });
 
 Router.route('/', function () {
-    console.log("Estamos en el /");
-    this.render('homeLogin', {to:"main"});
+    this.render('navbar', {to:"header"});
+    this.render('home', {to:"main"});
     
 });
 Router.route('/home/', function () {
@@ -58,6 +58,11 @@ Router.route('/personal/', function () {
     console.log("Estamos en el /personal");
     this.render('navbar', {to:"header"});
     this.render('listaPersonal', {to:"main"});
+});
+Router.route('/personal/new', function(){
+    console.log("Nuevo profesor");
+    this.render('navbar', {to:"header"});
+    this.render('profesorNew', {to:"main"});
 });
 Router.route('/personal/:_id', function(){
     console.log("Accediendo al documento: "+this.params._id);
@@ -74,6 +79,11 @@ Router.route('/inventario/', function () {
     console.log("Estamos en el /inventario");
     this.render('navbar', {to:"header"});
     this.render('listaInventario', {to:"main"});
+});
+Router.route('/inventario/new', function(){
+    console.log("Nuevo ");
+    this.render('navbar', {to:"header"});
+    this.render('inventarioNew', {to:"main"});
 });
 Router.route('/inventario/:_id', function(){
     console.log("Accediendo al documento: "+this.params._id);
@@ -140,7 +150,7 @@ Template.profesoresForm.rendered=function(){
         });
     },
     
-Template.profesoresForm.helpers({
+Template.mostrarprofesoresForm.helpers({
     data: function() {
         console.log("params _id: "+ Router.current().params._id);
         
@@ -184,6 +194,8 @@ Template.profesoresForm.events({
         console.log("Actuaizando profesor: "+prof);
 //       Meteor.call("updateProfesor", idP, prof);
         Meteor.call("upsertProfesor", idP, prof);
+        console.log("Guardado");
+        Router.go('/personal');
     },
 }),
 
@@ -217,7 +229,7 @@ Template.inventarioForm.rendered=function(){
         });
     },
     
-Template.inventarioForm.helpers({
+Template.mostrarinventarioForm.helpers({
     data: function() {
         console.log("en data");
         console.log("params _id: "+ Router.current().params._id);
@@ -262,6 +274,8 @@ Template.inventarioForm.events({
        };
         console.log("Actuaizando inventario: "+invent);
         Meteor.call("upsertInventario", idI, invent);
+        console.log("Guardado");
+        Router.go('/inventario');
     }
 }),
     

@@ -1,0 +1,16 @@
+<template name="profesorNew">
+    <div class="alert alert-success" role="alert">
+        <div class="media">
+
+                <a class="pull-left" href="#">
+                  <img class="media-object img-rounded" src="ava1.png" alt="{{data.nombre}}">
+                </a>
+
+            <div class="media-body">
+                {{> profesoresForm}}
+                <a href="/personal"><button class="btn btn-default">&times; Cancelar</button></a>
+            </div>
+            
+        </div>
+    </div>
+</template>
