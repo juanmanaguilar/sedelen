@@ -1,6 +1,3 @@
-Profesores = new Mongo.Collection("profesores");
-Inventario = new Mongo.Collection("inventario");                                
-
 Meteor.subscribe("profesores");
 Meteor.subscribe("inventario");
 
