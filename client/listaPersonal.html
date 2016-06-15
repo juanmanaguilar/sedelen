@@ -5,55 +5,37 @@
 <template name="mostrarlistaPersonal">
    
     <div class="container">       
-        <div class="row col-xs-12 col-sm-10">
-            
-
-            <div class="row row-content">
-                <div class="col-xs-12 col-sm-8 col-lg-10">
-                    <h2>Lista de Personal </h2><br>
-                    {{> searchBoxP}}
-                    
-                </div>
-                <div class="col-xs-12 col-sm-3">
-                    <p style="padding:20px;"></p>
-                    
-                </div>
-           </div>   
-        </div> <!-- / row -->
-    </div>
-
-    <div class="modal fade alert alert-success" id="profesor_add_form">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <div class="modal-title">
-            </div>
-          </div>
-          <div class="modal-body">
-            {{> profesoresForm}}
-        </div>
-          <div class="modal-footer">
-            <button class="btn btn-default" data-dismiss="modal">&times; Cerrar</button>
-          </div>  
-          </div>
-        </div>
-
+        {{> searchBoxP}} 
     </div>
     
 </template>
 
 <template name="searchBoxP">
-    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>{{> EasySearch.Input indexes=searchIndexes }}
-<!--    <button type="button" class="btn btn-default btn-md js-show-profesoresForm">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo con modal
-    </button>
--->
-    <a href="/personal/new">
-    <button type="button" class="btn btn-default btn-md">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo
-    </button>
-    </a>
-<br>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a class="navbar-brand" href="#">
+                        <h2>Lista de Personal</h2>
+                      </a>
+                </li>
+                <li>
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>{{> EasySearch.Input indexes=searchIndexes }}
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/personal/new">
+                    <button type="button" class="btn btn-default btn-md navbar-btn">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo
+                    </button>
+                    </a>
+                </li>
+            </ul>
+        </div>
+      </div>
+    </nav>    
+
     <ul class="media-list">
         {{#EasySearch.Each index=profIndex }}
         

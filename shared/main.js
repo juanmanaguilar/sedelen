@@ -26,7 +26,12 @@ Meteor.methods({
           return Profesores.remove(profesorId);
       }
     },
-    
+    insertPersonaldto: function(data){
+      if (this.userId) {
+          return Personaldto.insert(data);
+      }
+      return;
+    },
     upsertInventario: function (inventarioId, data){
         if (this.userId) {
           return Inventario.upsert(inventarioId, data);

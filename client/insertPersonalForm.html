@@ -1,0 +1,19 @@
+<template name="insertPersonalForm">
+    <div class="alert alert-success" role="alert">
+              {{#autoForm collection="Personaldto" id="insertPersonaldtoForm" type="method" meteormethod="insertPersonaldto"}}
+                <fieldset>
+                  <legend>Add a member</legend>
+                  {{> afQuickField name='usuario'}}
+                  {{> afQuickField name='nombre'}}
+                  {{> afQuickField name='apellidos'}}
+                  {{> afQuickField name='despacho'}}
+                  {{> afQuickField name='telefono'}}
+                  {{> afQuickField name='observaciones' rows=6}}
+                  {{> afQuickField name='email'}}
+                  {{> afQuickField name='activo'}}
+                </fieldset>
+                <button type="submit" class="btn btn-primary">Insert</button>
+              {{/autoForm}}
+        <a href="/personaldto"><button class="btn btn-default">&times; Cancelar</button></a>
+    </div>
+</template>

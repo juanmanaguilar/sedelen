@@ -1,0 +1,18 @@
+<template name="listaPersonaldto">
+     {{> ensureSignedIn template="mostrarlistaPersonaldto"}}
+     
+</template>
+<template name="mostrarlistaPersonaldto">
+   
+    <div class="container"> 
+        <ul>
+        {{#each personaldto}}
+            
+                <li>Usuario: {{usuario}}</li>
+           
+        {{/each}}
+         </ul>
+    </div>
+    
+</template>
+

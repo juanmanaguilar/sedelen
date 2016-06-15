@@ -37,6 +37,11 @@ Meteor.publish("profesores", function(){
         return Profesores.find();
      }
 });
+Meteor.publish("personaldto", function(){
+     if (this.userId) {
+        return Personaldto.find();
+     }
+});
 Meteor.publish("inventario", function(){
     if (this.userId){
         return Inventario.find();

@@ -1,5 +1,6 @@
 Meteor.subscribe("profesores");
 Meteor.subscribe("inventario");
+Meteor.subscribe("personaldto");
 
 let
     profIndex = new EasySearch.Index({
@@ -91,6 +92,31 @@ Router.route('/inventario/trash/:_id', function(){
     console.log("Accediendo al documento: "+this.params._id);
     this.render('navbar', {to:"header"});
     this.render('inventarioRemove', {to:"main"});
+});
+Router.route('/personaldto/', function () {
+    console.log("Estamos en el /personaldto");
+    this.render('navbar', {to:"header"});
+    this.render('listaPersonaldto', {to:"main"});
+});
+Router.route('/personaldto/new', function(){
+    console.log("Nuevo");
+    this.render('navbar', {to:"header"});
+    this.render('insertPersonalForm', {to:"main"});
+});
+Router.route('/personaldto/newQ', function(){
+    console.log("Nuevo");
+    this.render('navbar', {to:"header"});
+    this.render('personaldtoNew', {to:"main"});
+});
+Router.route('/personaldto/:_id', function(){
+    console.log("Accediendo al documento: "+this.params._id);
+    this.render('navbar', {to:"header"});
+    this.render('personaldtoEdit', {to:"main"});
+});
+Router.route('/personaldto/trash/:_id', function(){
+    console.log("Accediendo al documento: "+this.params._id);
+    this.render('navbar', {to:"header"});
+    this.render('personaldtoRemove', {to:"main"});
 });
 
 Template.navbar.helpers({
@@ -196,6 +222,12 @@ Template.profesoresForm.events({
     },
 }),
 
+Template.listaPersonaldto.helpers({
+   personaldto: function() {
+       return Personaldto.find({},{sort:{apellidos: 1, nombre: 1}});
+   }
+}),
+  
 Template.listaInventario.helpers({
    inventario: function() {
        return Inventario.find({}, {sort:{"nInvent": -1, "profesor": 1}});
