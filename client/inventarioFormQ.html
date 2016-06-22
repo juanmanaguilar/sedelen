@@ -1,0 +1,53 @@
+<template name="inventarioFormQ">
+     <p>type: {{typeQ}} MethosQ: {{methodQ}} DataQ _id: {{dataQ._id}}</p>
+ <!-- {{#autoForm collection="Inventario" id="insertInventarioForm" type=typeQ doc=dataQ validation="keyup"}} -->
+ {{#autoForm collection="Inventario" id="insertInventarioForm" type="method" meteormethod=methodQ doc=dataQ validation="keyup"}}
+        <fieldset>
+            <legend>DATOS DE INVENTARIO</legend>
+                
+                <legend>DESCRIPCIÓN DEL ELEMENTO</legend>
+
+                    {{> afQuickField name="nInvent" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                    {{> afQuickField name="descElem" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                    {{> afQuickField name="elemsElem" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                    {{> afQuickField name="marca" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-2"}}
+                    {{> afQuickField name="modelo" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-2"}}
+                    {{> afQuickField name="nSerie" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-2"}}
+                
+                <legend>UBICACIÓN DEL ELEMENTO</legend>
+
+                    {{> afQuickField name="orgElem" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                    {{> afQuickField name="centroCoste" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                    {{> afQuickField name="campus" defaultValue="Reina Mercedes" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                    {{> afQuickField name="edif" defaultValue="E.T.S. de Ingeniería Informática" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-2"}}
+                    {{> afQuickField name="planta" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-2"}}
+                    {{> afQuickField name="local" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-2"}}
+                
+                <legend>INVESTIGACIÓN</legend>
+
+                    {{> afQuickField name="orgProy" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                    {{> afQuickField name="nProy" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                    {{> afQuickField name="titProy" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                
+                <legend>VALORACIÓN DEL ELEMENTO</legend>
+
+                    {{> afQuickField name="proveedor" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                    {{> afQuickField name="nFact" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-2"}}
+                    {{> afQuickField name="fechaFact" template="bootstrap3-horizontal" type="bootstrap-datepicker" label-class="col-sm-2" input-col-class="col-sm-2"}}
+                    {{> afQuickField name="precio" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-2"}}
+                
+                <legend>Otros datos Departamento</legend>
+
+                    {{> afQuickField name="unidad" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                    {{> afQuickField name="profesor" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                    {{> afQuickField name="dpt" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                
+            <div>
+                
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="reset" class="btn btn-default">Reset</button>
+            </div>
+        </fieldset>
+  {{/autoForm}}
+       
+</template>

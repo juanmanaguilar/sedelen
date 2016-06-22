@@ -1,12 +1,7 @@
 <template name="inventarioEdit">
     <div class="alert alert-warning" role="alert">
-        <div class="media">
-
-            <div class="media-body">
-                {{> inventarioForm}}
-                <a href="/inventario"><button class="btn btn-default">&times; Cancelar</button></a>
-            </div>
-            
-        </div>
+         <a href="/inventario"><button class="btn btn-default navbar-right">&times; Cancelar</button></a>
+        {{> inventarioFormQ}}
+        <button class="btn btn-warning navbar-right js-generar-pdf">Generar Pdf</button>
     </div>
 </template>

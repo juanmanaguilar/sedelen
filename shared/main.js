@@ -34,6 +34,25 @@ Meteor.methods({
     },
     upsertInventario: function (inventarioId, data){
         if (this.userId) {
+          console.log("Upsert inventario: "+inventarioId);
+          return Inventario.upsert(inventarioId, data);
+      }
+    },
+    upsertInventarioQ: function (inventarioId, data){
+        if (this.userId) {
+          console.log("Upsert inventario: "+inventarioId);
+          return Inventario.upsert(inventarioId, data);
+      }
+    },
+    insertInventarioQ: function (inventarioId, data){
+        if (this.userId) {
+          console.log("Insert inventario: "+inventarioId);
+          return Inventario.insert(inventarioId, data);
+      }
+    },
+    updateInventarioQ: function (inventarioId, data){
+        if (this.userId) {
+          console.log("Update inventario: "+inventarioId);
           return Inventario.upsert(inventarioId, data);
       }
     },

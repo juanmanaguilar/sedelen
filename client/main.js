@@ -86,8 +86,14 @@ Router.route('/inventario/new', function(){
 Router.route('/inventario/:_id', function(){
     console.log("Accediendo al documento: "+this.params._id);
     this.render('navbar', {to:"header"});
-    this.render('inventarioEdit', {to:"main"});
+    this.render('inventarioEdit', {to:"main",
+                                  data: function () {
+                                            var idP = new Meteor.Collection.ObjectID(this.params._id);
+                                            return Inventario.findOne({_id: idP});
+                                        },
+                                  });
 });
+
 Router.route('/inventario/trash/:_id', function(){
     console.log("Accediendo al documento: "+this.params._id);
     this.render('navbar', {to:"header"});
@@ -222,7 +228,7 @@ Template.profesoresForm.events({
     },
 }),
 
-Template.listaPersonaldto.helpers({
+Template.mostrarlistaPersonaldto.helpers({
    personaldto: function() {
        return Personaldto.find({},{sort:{apellidos: 1, nombre: 1}});
    }
@@ -233,10 +239,34 @@ Template.listaInventario.helpers({
        return Inventario.find({}, {sort:{"nInvent": -1, "profesor": 1}});
    }
 }),
+Template.listaInventario.events({
+    idLink: function(){
+        if (Inventario.findOne({_id: Router.current().params._id})){
+            return Inventario.findOne({_id: Router.current().params._id});
+        }
+        else {
+            var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
+            console.log("idI: "+ idI);
+            return Inventario.findOne({_id: idI});
+        }    
+    }
+}),
     
 Template.listaInventario.events({
-  'click .js-show-inventarioForm':function(event){
-      $("#inventario_add_form").modal('show');
+  'click .js-show-inventarioForm': function(event){
+//      $("#inventario_add_form").modal('show');
+      console.log(event);
+      console.log(this);
+      if (Inventario.findOne({_id: this._id})){
+            console.log("el _id es un Object: "+this._id);
+            Router.go("/inventario/"+this._id);
+        }
+        else {
+            console.log("El _id es un str: "+this._id.str);
+            Router.go("/inventario/"+this._id.str);
+        }    
+      
+      
   },
   'change .sorting': (e) => {
     inventIndex
@@ -265,6 +295,242 @@ Template.mostrarinventarioForm.helpers({
         var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
         console.log("idI: "+ idI);
         return Inventario.findOne({_id: idI});
+    }
+}),
+    
+Template.inventarioEdit.events({
+	'click .js-generar-pdf': function() {
+        console.log("Generando PDF");
+		// Define the pdf-document 
+		//var docDefinition = { content: 'Mi documento pdf' };
+        var nInv = this.nInvent.toString();
+        console.log("nInv: "+nInv);
+        
+        var docDefinition = {
+            pageSize: 'A4',
+            header: [{
+                margin: 10,
+                columns: [
+                        
+                         { 
+                             margin: [10, 0, 0, 0],
+                             text: 'UNIVERSIDAD DE SEVILLA\nÁREA DE CONTRATACIÓN Y PATRIMONIO\nUNIDAD DE INVENTARIO', style: 'subheader' }
+                        
+                ]}
+            ],
+            
+	       content: [
+               
+               
+                { text: 'UNIVERSIDAD DE SEVILLA\nÁREA DE CONTRATACIÓN Y PATRIMONIO\nUNIDAD DE INVENTARIO', style: 'subheader' },
+				
+				{
+						style: 'tableExample',
+						color: '#444',
+						table: {
+								widths: [ 345, 145 ],
+								headerRows: 2,
+								// keepWithHeaderRows: 1,
+								body: [
+										[{ text: 'IMPRESO PARA DAR DE ALTA EN EL INVENTARIO\nGENERAL', rowSpan: 2,style: 'tableHeader' }, { text: 'CÓDIGO:                           ', rowSpan: 2, style: 'tableHeader' }],
+										['',''],
+								]
+						}
+				},
+                
+                { 
+                    text: 'A rellenar por la Unidad de Inventario', 
+                    style: ['quote', 'small'] 
+                },
+                {
+						style: 'tableExample',
+						color: '#444',
+						table: {
+								widths: [ 500 ],
+								// keepWithHeaderRows: 1,
+								body: [
+										[{ text: 'Nº DE INVENTARIO\nGENERAL:......................................................................................', rowSpan: 2, style: 'tableHeader' }],
+										[''],
+								]
+						}
+				},		
+				{ 
+                    text: 'A rellenar por el Centro/Departamento/Servicio', 
+                    style: ['quote', 'small'] 
+                },
+                {
+						style: 'tableExample',
+						color: '#444',
+						table: {
+								widths: [ 500 ],
+								// keepWithHeaderRows: 1,
+								body: [
+										[{ text: 'Nº JUSTIFICANTE DEL GASTO:...............................................................', style: 'tableHeader', colSpan: 0 }],
+                                        [{ text: 'DESCRIPCIÓN DEL ELEMENTO', style: 'tableHeader', alignment: 'center', rowSPan: 2 }],
+                                        [ {table: {
+                                            headerRows: 1,
+                                                widths: [ 500 ],
+                                                body: [ 
+                                                        [{ text: '\nNº INVENTARIO DE CENTRO: '+nInv , style: 'subheader', rowSPan: 2 }],
+                                                        [{ text: 'DESCRIPCIÓN DEL BIEN: '+this.descElem , style: 'subheader',rowSPan: 3 }],
+                                                        [{ text: 'ELEMENTOS QUE LO COMPONEN: '+this.elemsElem , style: 'subheader',rowSPan: 3 }],
+                                                    
+                                                        [{ 
+                                                            
+                                                            style: 'subheader',
+                                                            columns: [
+                                                                { text: 'MARCA: '+this.marca },
+                                                                { text: 'MODELO: '+this.modelo },
+                                                                { text: 'NºSERIE: '+this.nSerie}
+
+                                                            ]
+                                                         }],
+                                                        
+                                                        [{ 
+                                                            
+                                                            style: 'subheader',
+                                                            columns: [
+                                                                { text: 'MATRÍCULA(vehículos:):' },
+                                                                { text: 'NºDE BASTIDOR(vehículos):' }
+                                                            ]
+                                                         }],
+                                                        
+                                                        [{ text: 'SITUACIÓN DEL BIEN:........................................................................', style: 'subheader'}]
+                                                    ]
+                                        },
+                                        layout: 'noBorders'}],
+                                    
+                                    
+                                        [{ text: 'UBICACIÓN DEL ELEMENTO', style: 'tableHeader', alignment: 'center', rowSPan: 2 }],
+                                    
+                                        [ {table: {
+                                            headerRows: 1,
+                                            widths: [ 500 ],
+                                            body: [ 
+                                                    [{ text: '\nUBICACIÓN ECONÓMICA(Indicar orgánica): '+this.orgElem , style: 'subheader', rowSPan: 2 }],
+                                                    [{ text: 'UBICACIÓN ORGANIZATIVA(centro de coste): '+this.centroCoste , style: 'subheader' }],
+                                                    [{ text: 'UBICACIÓN GEOGRÁFICA\n\nCAMPUS: '+this.campus, style: 'subheader', rowSPan: 2 }],
+                                                    [{ text: 'EDIFICIO: '+this.edif , style: 'subheader' }],
+                                                    [{ text: 'PLANTA: '+this.planta , style: 'subheader' }],
+                                                    [{ text: 'LOCAL: '+this.local , style: 'subheader' }],
+                                                    [{ text: 'SUBLOCAL: ' , style: 'subheader' }]
+                                                ]
+                                        },
+                                        layout: 'noBorders'}],
+                                        
+                                        [{ text: 'VALORACIÓN DEL ELEMENTO', style: 'tableHeader', alignment: 'center', rowSPan: 2 }],
+                                    
+                                        [ {table: {
+                                            headerRows: 1,
+                                            widths: [ 500 ],
+                                            body: [ 
+
+                                                    [{ text: '\nPROVEEDOR/TRANSMITIENTE: '+this.proveedor, style: 'subheader', rowSPan: 2 }],
+                                                    [{ 
+
+                                                        style: 'subheader',
+                                                        columns: [
+                                                            { text: 'NÚM. DE FACTURA: '+this.nFact },
+                                                            { text: 'FECHA de FACTURA/DOCUMENTO: '+this.fechaFact }
+                                                        ]
+                                                     }],
+
+                                                    [{ text: 'PRECIO DE ADQUISICIÓN(Uitario con IVA incluido aplicando prorrata): '+this.precio, style: 'subheader', rowSPan: 2 }],
+                                                    [{ text: 'VALOR DECLARADO EN DOCUMENTO OFICIAL (Adquisiciones sin factura): ' , style: 'subheader' }],
+                                                    [{ text: 'VALOR ESTIMADO (Otras altas): ' , style: 'subheader' }]
+                                                ]
+                                        },
+                                        layout: 'noBorders'}],
+                                    
+                                          
+								]
+						}
+				},
+                { 
+                    alignment: 'center',
+                    fontSize: 6,
+                    columns: [
+                        { text: 'Firma y sello del\nresponsable funcional\n\n\n\nFdo:'},
+                        { text: 'LA UNIDAD DE\nINVENTARIO'}
+                    ]
+                }
+				
+            ],
+            styles: {
+                header: {
+                    fontSize: 8,
+                    bold: true,
+                    margin: [0, 0, 0, 10]
+                },
+                ancho100: {
+                    fontSize: 8,
+                    bold: true,
+                    margin: [0, 0, 0, 0],
+                    width: '100%'
+                },
+                subheader: {
+                    fontSize: 6,
+                    bold: true,
+                    margin: [0, 10, 0, 5]
+                },
+                tableExample: {
+                    margin: [0, 5, 0, 15]
+                },
+                tableHeader: {
+                    bold: true,
+                    fontSize: 6,
+                    color: 'black'
+                },
+                quote: {
+                    italics: true
+                },
+                small: {
+                    fontSize: 4
+                }
+            }
+        }
+		
+		// Start the pdf-generation process 
+		pdfMake.createPdf(docDefinition).open();
+	}
+});
+
+Template.inventarioFormQ.helpers({
+    
+    dataQ: function() {
+        console.log("En dataQ");
+        console.log("params _id: "+ Router.current().params._id);
+        
+        if (Inventario.findOne({_id: Router.current().params._id})){
+            return Inventario.findOne({_id: Router.current().params._id});
+        }
+        else {
+            var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
+            console.log("idI dataQ: "+ idI);
+            return Inventario.findOne({_id: idI});
+        }    
+    },
+    methodQ: function(){
+        console.log("path: "+Router.current().location.get().path);
+        if (Router.current().location.get().path == "/inventario/new"){
+            console.log("methodQ: insertInventarioQ")
+            return "insertInventarioQ";
+        }
+        else {
+            console.log("methodQ: updateInventarioQ")
+            return "updateInventarioQ";
+        }
+    },
+    typeQ: function(){
+        console.log("Url: "+Router.current().location.get().path);
+        if (Router.current().location.get().path == "/inventario/new"){
+            console.log("typeQ: insert")
+            return "insert";
+        }
+        else {
+            console.log("typeQ: update")
+            return "update";
+        }
     }
 }),
 Template.inventarioForm.events({

@@ -4,14 +4,14 @@
 </template>
 <template name="mostrarlistaPersonaldto">
    
-    <div class="container"> 
-        <ul>
+    <div class="container">
         {{#each personaldto}}
-            
-                <li>Usuario: {{usuario}}</li>
-           
-        {{/each}}
-         </ul>
+  		<div class="col-md-3 col-xs-6">
+  			<div class="light-border">
+  				<a href="/personaldto/{{_id}}">{{usuario}}</a>
+  			</div>
+  		</div>
+  		{{/each}}
     </div>
     
 </template>

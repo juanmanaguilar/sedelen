@@ -14,7 +14,8 @@ let
           },
         engine: new EasySearch.Minimongo({
             sort: function (searchObject, options) {
-              const sortBy = options.search.props.sortBy;
+//              const sortBy = options.search.props.sortBy;
+                const sortBy = 'nInvent';
 
               // return a mongo sort specifier
               if ('nInvent' === sortBy) {
@@ -51,4 +52,3 @@ Meteor.publish("inventario", function(){
 Meteor.publish("allUsers", function(){
   return Meteor.users.find();
 });
-
