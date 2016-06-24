@@ -9,28 +9,8 @@ let
     inventIndex = new EasySearch.Index({
         collection: Inventario,
         fields: ['nInvent','descElem', 'profesor'],
-        defaultSearchOptions: {
-            sortBy: 'nInvent'
-          },
-        engine: new EasySearch.Minimongo({
-            sort: function (searchObject, options) {
-//              const sortBy = options.search.props.sortBy;
-                const sortBy = 'nInvent';
-
-              // return a mongo sort specifier
-              if ('nInvent' === sortBy) {
-                return {
-                  nInvent: -1
-                };
-              } else if ('fechaFact' === sortBy) {
-                return {
-                  fechaFact: -1
-                };
-              } else {
-                throw new Meteor.Error('Invalid sort by prop passed');
-              }
-            }
-        })
+        
+        engine: new EasySearch.Minimongo()
     });
 
 Meteor.publish("profesores", function(){

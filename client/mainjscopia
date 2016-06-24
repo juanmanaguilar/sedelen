@@ -14,20 +14,24 @@ let
         defaultSearchOptions: {
             sortBy: 'nInvent'
           },
-            engine: new EasySearch.Minimongo({
+        engine: new EasySearch.Minimongo({
             sort: function (searchObject, options) {
               const sortBy = options.search.props.sortBy;
 
               // return a mongo sort specifier
- //             if ('nInvent' === sortBy) {
+              if ('nInvent' === sortBy) {
                 return {
                   nInvent: -1
                 };
-  //            } else {
-    //            throw new Meteor.Error('Invalid sort by prop passed');
-      //        }
+              } else if ('fechaFact' === sortBy) {
+                return {
+                  fechaFact: -1
+                };
+              } else {
+                throw new Meteor.Error('Invalid sort by prop passed');
+              }
             }
-          })
+        })
     });
 
 
@@ -37,7 +41,7 @@ Router.configure({
 });
 
 Router.route('/', function () {
-//    this.render('navbar', {to:"header"});
+    this.render('navbar', {to:"header"});
     this.render('home', {to:"main"});
     
 });
@@ -84,13 +88,8 @@ Router.route('/inventario/:_id', function(){
     this.render('navbar', {to:"header"});
     this.render('inventarioEdit', {to:"main",
                                   data: function () {
-                                            if(Inventario.findOne({_id: this.params._id})){
-                                                return Inventario.findOne({_id: this.params._id});
-                                            }
-                                            else {
-                                                var idP = new Meteor.Collection.ObjectID(this.params._id);
-                                                return Inventario.findOne({_id: idP});
-                                            }    
+                                            var idP = new Meteor.Collection.ObjectID(this.params._id);
+                                            return Inventario.findOne({_id: idP});
                                         },
                                   });
 });
@@ -240,26 +239,63 @@ Template.listaInventario.helpers({
        return Inventario.find({}, {sort:{"nInvent": -1, "profesor": 1}});
    }
 }),
+Template.listaInventario.events({
+    idLink: function(){
+        if (Inventario.findOne({_id: Router.current().params._id})){
+            return Inventario.findOne({_id: Router.current().params._id});
+        }
+        else {
+            var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
+            console.log("idI: "+ idI);
+            return Inventario.findOne({_id: idI});
+        }    
+    }
+}),
     
 Template.listaInventario.events({
   'click .js-show-inventarioForm': function(event){
-
+//      $("#inventario_add_form").modal('show');
       console.log(event);
       console.log(this);
-      console.log("typeof this._id: "+typeof this._id)
-      console.log("Typeof this._id.str:"+typeof this._id.str);
- //     if (Inventario.findOne({_id: this._id})){
-      if (typeof this._id == 'string') {
-            console.log("el _id es un sting: "+this._id);
+      if (Inventario.findOne({_id: this._id})){
+            console.log("el _id es un Object: "+this._id);
             Router.go("/inventario/"+this._id);
         }
         else {
-            console.log("El _id es un object: "+this._id);
-//            console.log("El str del object es: "+this._id.str);
-            Router.go("/inventario/"+this._id);
-        }        
-  } 
+            console.log("El _id es un str: "+this._id.str);
+            Router.go("/inventario/"+this._id.str);
+        }    
+      
+      
+  },
+  'change .sorting': (e) => {
+    inventIndex
+      .getComponentMethods()
+      .addProps('sortBy', $(e.target).val())
+    ;
+  },
+    
   
+}),
+    
+Template.inventarioForm.rendered=function(){
+            $('#fechaFact').datepicker({
+            format: "dd/mm/yyyy",
+            weekStart: 1,
+            maxViewMode: 3,
+            language: "es",
+            autoclose: true
+        });
+    },
+    
+Template.mostrarinventarioForm.helpers({
+    data: function() {
+        console.log("en data");
+        console.log("params _id: "+ Router.current().params._id);
+        var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
+        console.log("idI: "+ idI);
+        return Inventario.findOne({_id: idI});
+    }
 }),
     
 Template.inventarioEdit.events({
@@ -500,6 +536,46 @@ Template.inventarioFormQ.helpers({
             console.log("typeQ: update")
             return "update";
         }
+    }
+}),
+Template.inventarioForm.events({
+    'submit .js-update-inventario':function(event){
+       event.preventDefault();
+        console.log("Inventario _id: "+ Router.current().params._id);
+        var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
+        console.log("Actualizando inventatio: "+event.target.nInvent.value+" "+event.target.descElem.value+" id: "+idI);
+
+       var invent = {
+           _id: idI,
+           nInvent: event.target.nInvent.value,
+           descElem: event.target.descElem.value,
+           elemsElem: event.target.elemsElem.value,
+           marca: event.target.marca.value,
+           modelo: event.target.modelo.value,
+           nSerie: event.target.nSerie.value,
+           orgElem: event.target.orgElem.value,
+           centroCoste: event.target.centroCoste.value,
+           campus: event.target.campus.value,
+           edif: event.target.edif.value,
+           planta: event.target.planta.value,
+           local: event.target.local.value,
+           orgProy: event.target.orgProy.value,
+           nProy: event.target.nProy.value,
+           titProy: event.target.titProy.value,
+           proveedor: event.target.proveedor.value,
+           nFact: event.target.nFact.value,
+           fechaFact: event.target.fechaFact.value,
+           precio: event.target.precio.value,
+           
+           unidad: event.target.unidad.value,
+           profesor: event.target.profesor.value,
+           dpt: event.target.dpt.value,
+           
+       };
+        console.log("Actuaizando inventario: "+invent);
+        Meteor.call("upsertInventario", idI, invent);
+        console.log("Guardado");
+        Router.go('/inventario');
     }
 }),
     

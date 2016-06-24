@@ -1,13 +1,27 @@
 <template name="home">
-     {{> ensureSignedIn template="mostrarHome"}}
+    <div class="text-center">
+        
+
+                <a href="#" >
+                  <img class="img-rounded center-block" src="logolsi5.gif" alt="Logo LSI" aling="middle">
+                </a>
+
+            
+                <h4>Bienvanido a sedelen</h4>
+                {{> ensureSignedIn template="mostrarHome"}}
+            
+    </div>
+     
     
 </template>
 <template name="mostrarHome">
   <div class="container">   
-    <div class="text-center">
-      <h4>Bienvanido a sedelen</h4>
-        {{> atNavButton}}
+    
+            <div class="media-body">
+                {{> navbar}}
+                {{> atNavButton}}
+            </div>
+            
         
-    </div>
   </div>
 </template>

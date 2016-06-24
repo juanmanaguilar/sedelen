@@ -20,39 +20,21 @@
            </div>   
         </div> <!-- / row -->
     </div>
-    <div class="modal fade alert alert-success" id="inventario_add_form">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <div class="modal-title">
-            </div>
-          </div>
-          <div class="modal-body">
-            {{> inventarioForm}}
-        </div>
-          <div class="modal-footer">
-            <button class="btn btn-default" data-dismiss="modal">&times; Cerrar</button>
-          </div>  
-          </div>
-        </div>
-
-    </div>
+    
 </template>
 <template name="searchBoxI">
     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>{{> EasySearch.Input indexes=searchIndexes}}
-    <select class="sorting">
-        <option value="nInvent">Nº de inventario</option>
-        <option value="fechaFact">Fecha Factura</option>
-    </select>
-<!--    <button type="button" class="btn btn-default btn-md js-show-inventarioForm">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo con modal
-    </button>
--->
+
     <a href="/inventario/new">
         <button type="button" class="btn btn-default btn-md">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo
         </button>
     </a>
+    <div class="input-group input-daterange">
+        <input type="Date" class="form-control datepicker" value="2002-04-05">
+        <span class="input-group-addon">a</span>
+        <input type="text" class="form-control" value="2016-06-21">
+    </div>
 
     <ul class="media-list">
         {{#EasySearch.Each index=inventIndex }}

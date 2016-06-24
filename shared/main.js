@@ -46,8 +46,10 @@ Meteor.methods({
     },
     insertInventarioQ: function (inventarioId, data){
         if (this.userId) {
+//          var nuevoId = new Meteor.Collection.ObjectID(inventarioId); //Forzamos que el id sea un Object
           console.log("Insert inventario: "+inventarioId);
-          return Inventario.insert(inventarioId, data);
+//          return Inventario.insert(nuevoId, data);
+          return Inventario.insert(inventarioId, data);    
       }
     },
     updateInventarioQ: function (inventarioId, data){
