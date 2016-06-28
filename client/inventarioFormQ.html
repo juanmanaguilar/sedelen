@@ -1,12 +1,13 @@
 <template name="inventarioFormQ">
 
  <!-- {{#autoForm collection="Inventario" id="insertInventarioForm" type=typeQ doc=dataQ validation="keyup"}} -->
- {{#autoForm collection="Inventario" id="insertInventarioForm" type="method" meteormethod=methodQ doc=dataQ validation="keyup"}}
+ <!-- {{#autoForm collection="Inventario" id=idQ type="method" meteormethod=methodQ doc=this validation="keyup"}} -->
+  {{#autoForm collection="Inventario" id=idQ type=typeQ meteormethod=methodQ doc=this alidation="keyup" }}
         <fieldset>
             <legend>DATOS DE INVENTARIO</legend>
-                
+                 
                 <legend>DESCRIPCIÓN DEL ELEMENTO</legend>
-
+            
                     {{> afQuickField name="nInvent" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
                     {{> afQuickField name="descElem" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
                     {{> afQuickField name="elemsElem" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
@@ -44,7 +45,7 @@
                 
             <div>
                 
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
                 <button type="reset" class="btn btn-default">Reset</button>
             </div>
         </fieldset>

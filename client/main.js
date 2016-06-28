@@ -84,13 +84,19 @@ Router.route('/inventario/:_id', function(){
     this.render('navbar', {to:"header"});
     this.render('inventarioEdit', {to:"main",
                                   data: function () {
+                                            console.log("En data");
+                                            console.log("params _id: "+this.params._id);
+
                                             if(Inventario.findOne({_id: this.params._id})){
+                                                console.log("idI data: "+this.params._id);
                                                 return Inventario.findOne({_id: this.params._id});
                                             }
                                             else {
-                                                var idP = new Meteor.Collection.ObjectID(this.params._id);
-                                                return Inventario.findOne({_id: idP});
-                                            }    
+                                                var idI = new Meteor.Collection.ObjectID(this.params._id);
+                                                console.log("idI data: "+idI);
+                                                console.log(Inventario.findOne({_id: idI}));
+                                                return Inventario.findOne({_id: idI});
+                                            } 
                                         },
                                   });
 });
@@ -468,14 +474,16 @@ Template.inventarioFormQ.helpers({
     
     dataQ: function() {
         console.log("En dataQ");
-        console.log("params _id: "+ Router.current().params._id);
+        console.log("params _id: "+Router.current().params._id);
         
         if (Inventario.findOne({_id: Router.current().params._id})){
+            console.log("idI dataQ: "+Router.current().params._id);
             return Inventario.findOne({_id: Router.current().params._id});
         }
         else {
             var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
-            console.log("idI dataQ: "+ idI);
+            console.log("idI dataQ: "+idI);
+            console.log(Inventario.findOne({_id: idI}));
             return Inventario.findOne({_id: idI});
         }    
     },
@@ -487,14 +495,26 @@ Template.inventarioFormQ.helpers({
         }
         else {
             console.log("methodQ: updateInventarioQ")
-            return "updateInventarioQ";
+            return "updateInventarioQ"; // Si uso el method para el update no me funciona dice doc undefined
+        }
+    },
+    idQ: function(){
+        console.log("Url: "+Router.current().location.get().path);
+        if (Router.current().location.get().path == "/inventario/new"){
+            console.log("idQ: insert");
+            return "insertInventarioForm";
+        }
+        else {
+            console.log("idQ: updateinventarioForm")
+            return "updateInventarioForm";
         }
     },
     typeQ: function(){
         console.log("Url: "+Router.current().location.get().path);
         if (Router.current().location.get().path == "/inventario/new"){
-            console.log("typeQ: insert")
-            return "insert";
+            console.log("typeQ: insert");
+//            return "insert"; 
+            return "method";  //para el inser si me funciona con el method que es lo recomendado por seguridad.
         }
         else {
             console.log("typeQ: update")

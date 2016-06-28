@@ -55,7 +55,9 @@ Meteor.methods({
     updateInventarioQ: function (inventarioId, data){
         if (this.userId) {
           console.log("Update inventario: "+inventarioId);
-          return Inventario.upsert(inventarioId, data);
+        console.log("Update inventario _id: "+inventarioId.str);
+            console.log("data: "+data);
+          return Inventario.update(inventarioId, data);
       }
     },
     removeInventario: function (inventarioId){
