@@ -1,3 +1,5 @@
+import { ReactiveVar } from 'meteor/reactive-var'
+
 Meteor.subscribe("profesores");
 Meteor.subscribe("inventario");
 Meteor.subscribe("personaldto");
@@ -10,7 +12,7 @@ let
     }),
     inventIndex = new EasySearch.Index({
         collection: Inventario,
-        fields: ['nInvent','descElem', 'profesor'],
+        fields: ['nInvent','descElem', 'profesor', 'fechaFact'],
         defaultSearchOptions: {
             sortBy: 'nInvent'
           },
@@ -240,11 +242,55 @@ Template.mostrarlistaPersonaldto.helpers({
        return Personaldto.find({},{sort:{apellidos: 1, nombre: 1}});
    }
 }),
-  
+    
+Template.listaInventario.onCreated(function(){
+  // Here, this equals the current template instance. We can assign
+  // our ReactiveVar to it, making it accessible throughout the
+  // current template instance.
+    this.fechaDesde = new ReactiveVar();
+    var hoy = new Date().now;
+    this.fechaHasta = new ReactiveVar( hoy );
+});
+
+Template.listaInventario.rendered=function(){
+            $('.mydatepicker').datepicker({
+            format: "dd/mm/yyyy",
+            weekStart: 1,
+            maxViewMode: 3,
+            language: "es",
+            autoclose: true
+        });
+    },    
+    
 Template.listaInventario.helpers({
-   inventario: function() {
-       return Inventario.find({}, {sort:{"nInvent": -1, "profesor": 1}});
-   }
+    
+    fechaDesde: function () {
+        // Here we get our template instance from Template.instance() and
+        // can access fechaDesde from it.
+        console.log("fechaDesde: "+Template.instance().fechaDesde.get());
+        return Template.instance().fechaDesde.get();
+        
+    },
+    fechaHasta: function () {
+        
+        console.log("fechaDesde: "+Template.instance().fechaHasta.get());
+        return Template.instance().fechaHasta.get();
+    },
+    inventario: function() {
+       return Inventario.find({$and: [ 
+                                       {fechaFact: {$gte: Template.instance().fechaDesde.get() }},
+                                       {fechaFact: {$lte: Template.instance().fechaHasta.get() }},
+                                       {fechaFact: {$exists: true}},
+                                       {fechaFact: {$type: 9}},         //type: 2 string 9 date
+                                       {fechaFact: {$ne: ""}}
+                                     ] },
+                                        
+                              {sort:{"nInvent": -1, "profesor": 1}});
+   }    
+    
+//   inventario: function() {
+//       return Inventario.find({}, {sort:{"nInvent": -1, "profesor": 1}});
+//   }    
 }),
     
 Template.listaInventario.events({
@@ -264,7 +310,36 @@ Template.listaInventario.events({
 //            console.log("El str del object es: "+this._id.str);
             Router.go("/inventario/"+this._id);
         }        
-  } 
+  },
+  'click .js-show-inventarioRemove': function(event){
+
+      console.log(event);
+      console.log(this);
+      console.log("typeof this._id: "+typeof this._id)
+      console.log("Typeof this._id.str:"+typeof this._id.str);
+ //     if (Inventario.findOne({_id: this._id})){
+      if (typeof this._id == 'string') {
+            console.log("el _id es un sting: "+this._id);
+            Router.go("/inventario/trash/"+this._id);
+        }
+        else {
+            console.log("El _id es un object: "+this._id);
+//            console.log("El str del object es: "+this._id.str);
+            Router.go("/inventario/trash/"+this._id);
+        }        
+  },
+  'change .js-change-fechaDesde': function( event, template ) {
+    console.log( "Fecha desde: "+$( event.target ).val() ) 
+      // Here we get our template instance from the template
+      // argument in our event handler.
+      template.fechaDesde.set( $( event.target ).val() );  
+  },
+  'change .js-change-fechaHasta': function( event, template ) {
+    console.log( "Fecha hasta: "+$( event.target ).val() ) 
+      // Here we get our template instance from the template
+      // argument in our event handler.
+      template.fechaHasta.set( $( event.target ).val() );  
+  }
   
 }),
     
@@ -525,15 +600,32 @@ Template.inventarioFormQ.helpers({
     
 Template.inventarioRemove.events({
     'click .js-delete-inventario':function(event){
-        var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
-        console.log("Eliminando inventario _id: "+idI);
-        Meteor.call("removeInventario", idI);
+        if (Inventario.findOne({_id: Router.current().params._id})){
+            console.log("idI data a borrar: "+Router.current().params._id);
+            Meteor.call("removeInventario", Router.current().params._id);
+        }
+        else {
+            var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
+            console.log("Eliminando inventario _id: "+idI);
+            Meteor.call("removeInventario", idI);
+        }
     },
 }),
 Template.inventarioRemove.helpers({
     data: function(){
-        var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
-        return Inventario.findOne({_id: idI});
+        console.log("Borrar params _id: "+Router.current().params._id);
+        
+        if (Inventario.findOne({_id: Router.current().params._id})){
+            console.log("idI data a borrar: "+Router.current().params._id);
+            return Inventario.findOne({_id: Router.current().params._id});
+        }
+        else {
+            var idI = new Meteor.Collection.ObjectID(Router.current().params._id);
+            console.log("idI data a borrar: "+idI);
+            console.log(Inventario.findOne({_id: idI}));
+            return Inventario.findOne({_id: idI});
+        }    
     }
+        
 });   
 
