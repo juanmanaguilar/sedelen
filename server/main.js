@@ -44,3 +44,7 @@ Meteor.publish("inventario", function(){
 Meteor.publish("allUsers", function(){
   return Meteor.users.find();
 });
+
+Meteor.publish("activeUsers", function(){
+  return Meteor.users.find({activo:"VERDADERO"});
+});

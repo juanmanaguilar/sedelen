@@ -2,18 +2,23 @@
 
  <!-- {{#autoForm collection="Inventario" id="insertInventarioForm" type=typeQ doc=dataQ validation="keyup"}} -->
  <!-- {{#autoForm collection="Inventario" id=idQ type="method" meteormethod=methodQ doc=this validation="keyup"}} -->
-  {{#autoForm collection="Inventario" id=idQ type=typeQ meteormethod=methodQ doc=this alidation="keyup" }}
+  {{#autoForm collection="Inventario" id=idQ type=typeQ meteormethod=methodQ doc=this validation="keyup" }}
         <fieldset>
             <legend>DATOS DE INVENTARIO</legend>
+            
+                <legend>
+                    {{> afQuickField name="nJGasto" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                </legend>
                  
                 <legend>DESCRIPCIÓN DEL ELEMENTO</legend>
             
                     {{> afQuickField name="nInvent" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
                     {{> afQuickField name="descElem" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
-                    {{> afQuickField name="elemsElem" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
+                    {{> afQuickField name="elemsElem" defaultValue="" rows=3 template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
                     {{> afQuickField name="marca" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-2"}}
                     {{> afQuickField name="modelo" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-2"}}
                     {{> afQuickField name="nSerie" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-2"}}
+                    {{> afQuickField name="profesor" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
                 
                 <legend>UBICACIÓN DEL ELEMENTO</legend>
 
@@ -40,7 +45,6 @@
                 <legend>Otros datos Departamento</legend>
 
                     {{> afQuickField name="unidad" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
-                    {{> afQuickField name="profesor" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
                     {{> afQuickField name="dpt" template="bootstrap3-horizontal" label-class="col-sm-4" input-col-class="col-sm-8"}}
                 
             <div>

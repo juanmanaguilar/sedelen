@@ -41,6 +41,7 @@ Router.configure({
 Router.route('/', function () {
 //    this.render('navbar', {to:"header"});
     this.render('home', {to:"main"});
+
     
 });
 Router.route('/home/', function () {
@@ -239,7 +240,8 @@ Template.profesoresForm.events({
 
 Template.mostrarlistaPersonaldto.helpers({
    personaldto: function() {
-       return Personaldto.find({},{sort:{apellidos: 1, nombre: 1}});
+//       return Personaldto.find({},{sort:{apellidos: 1, nombre: 1}});
+       return Personaldto.find({activo:"VERDADERO"},{sort:{apellidos: 1, nombre: 1}});
    }
 }),
     
@@ -385,7 +387,7 @@ Template.inventarioEdit.events({
 								headerRows: 2,
 								// keepWithHeaderRows: 1,
 								body: [
-										[{ text: 'IMPRESO PARA DAR DE ALTA EN EL INVENTARIO\nGENERAL', rowSpan: 2,style: 'tableHeader' }, { text: 'CÓDIGO:                           ', rowSpan: 2, style: 'tableHeader' }],
+										[{ text: 'IMPRESO PARA DAR DE ALTA EN EL INVENTARIO GENERAL', rowSpan: 2,style: 'tableHeader' }, { text: 'CÓDIGO:                           ', rowSpan: 2, style: 'tableHeader' }],
 										['',''],
 								]
 						}
@@ -402,7 +404,7 @@ Template.inventarioEdit.events({
 								widths: [ 500 ],
 								// keepWithHeaderRows: 1,
 								body: [
-										[{ text: 'Nº DE INVENTARIO\nGENERAL:', rowSpan: 2, style: 'tableHeader' }],
+										[{ text: 'Nº DE INVENTARIO GENERAL:', rowSpan: 2, style: 'tableHeader' }],
 										[''],
 								]
 						}
@@ -418,15 +420,15 @@ Template.inventarioEdit.events({
 								widths: [ 500 ],
 								// keepWithHeaderRows: 1,
 								body: [
-										[{ text: 'Nº JUSTIFICANTE DEL GASTO:', style: 'tableHeader', colSpan: 0 }],
+										[{ text: 'Nº JUSTIFICANTE DEL GASTO: '+this.nJGasto , style: 'tableHeader', colSpan: 0 }],
                                         [{ text: 'DESCRIPCIÓN DEL ELEMENTO', style: 'tableHeader', alignment: 'center', rowSPan: 2 }],
                                         [ {table: {
                                             headerRows: 1,
                                                 widths: [ 500 ],
                                                 body: [ 
                                                         [{ text: 'Nº INVENTARIO DE CENTRO: '+nInv , style: 'subheader', rowSPan: 2 }],
-                                                        [{ text: 'DESCRIPCIÓN DEL BIEN: '+this.descElem , style: 'subheader',rowSPan: 3 }],
-                                                        [{ text: 'ELEMENTOS QUE LO COMPONEN: '+this.elemsElem , style: 'subheader',rowSPan: 3 }],
+                                                        [{ text: 'DESCRIPCIÓN DEL BIEN: '+this.descElem , style: 'subheader',rowSPan: 2 }],
+                                                        [{ text: 'ELEMENTOS QUE LO COMPONEN: '+this.elemsElem , style: 'subheader',rowSPan: 4 }],
                                                     
                                                         [{ 
                                                             
@@ -448,7 +450,7 @@ Template.inventarioEdit.events({
                                                             ]
                                                          }],
                                                         
-                                                        [{ text: 'SITUACIÓN DEL BIEN:', style: 'subheader'}]
+                                                        [{ text: 'USUARIO DEL BIEN: '+this.profesor , style: 'subheader'}]
                                                     ]
                                         },
                                         layout: 'noBorders'}],
@@ -465,8 +467,7 @@ Template.inventarioEdit.events({
                                                     [{ text: 'UBICACIÓN GEOGRÁFICA\n\nCAMPUS: '+this.campus, style: 'subheader', rowSPan: 2 }],
                                                     [{ text: 'EDIFICIO: '+this.edif , style: 'subheader' }],
                                                     [{ text: 'PLANTA: '+this.planta , style: 'subheader' }],
-                                                    [{ text: 'LOCAL: '+this.local , style: 'subheader' }],
-                                                    [{ text: 'SUBLOCAL: ' , style: 'subheader' }]
+                                                    [{ text: 'LOCAL: '+this.local , style: 'subheader' }]
                                                 ]
                                         },
                                         layout: 'noBorders'}],
@@ -484,7 +485,7 @@ Template.inventarioEdit.events({
                                                         style: 'subheader',
                                                         columns: [
                                                             { text: 'NÚM. DE FACTURA: '+this.nFact },
-                                                            { text: 'FECHA de FACTURA/DOCUMENTO: '+this.fechaFact }
+                                                            { text: 'FECHA de FACTURA/DOCUMENTO: '+this.fechaFact.toLocaleDateString() }
                                                         ]
                                                      }],
 
@@ -504,7 +505,7 @@ Template.inventarioEdit.events({
                     fontSize: 6,
                     margin: 20,
                     columns: [
-                        { text: 'Firma y sello del\nresponsable funcional\n\n\n\n\n\n\n\nFdo:'},
+                        { text: 'Firma y sello del\nresponsable funcional\n\n\n\n\n\n\n\nFdo: Antonio Ruiz Cortés'},
                         { text: 'LA UNIDAD DE\nINVENTARIO'}
                     ]
                 }
