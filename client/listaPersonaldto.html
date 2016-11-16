@@ -2,16 +2,44 @@
      {{> ensureSignedIn template="mostrarlistaPersonaldto"}}
      
 </template>
+
 <template name="mostrarlistaPersonaldto">
    
-    <div class="container">
-        {{#each personaldto}}
-<!--  		<div class="col-md-3 col-xs-6">
-  			<div class="light-border">
-  				<a href="/personaldto/{{_id}}">{{usuario}}</a>
-  			</div>
-  		</div>
--->
+    <div class="container">       
+        {{> searchBoxPdto}} 
+    </div>
+    
+</template>
+
+<template name="searchBoxPdto">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a class="navbar-brand" href="#">
+                        <h2>Lista de Personal Dto.</h2>
+                      </a>
+                </li>
+                <li>
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>{{> EasySearch.Input indexes=searchIndexes }}
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/personaldto/new">
+                    <button type="button" class="btn btn-default btn-md navbar-btn">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo
+                    </button>
+                    </a>
+                </li>
+            </ul>
+        </div>
+      </div>
+    </nav>    
+
+    <ul class="media-list">
+        {{#EasySearch.Each index=personalIndex }}
+        
         <div class="well">
             <div class="light-border">
             <li class="media">
@@ -39,8 +67,9 @@
             </li>
             </div>
         </div>
-  		{{/each}}
-    </div>
-    
+        
+        {{/EasySearch.Each}}
+    </ul>
+    {{> EasySearch.LoadMore index=personalIndex content="Mostrar más"}}   
 </template>
 

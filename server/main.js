@@ -11,6 +11,11 @@ let
         fields: ['nInvent','descElem', 'profesor'],
         
         engine: new EasySearch.Minimongo()
+    }),
+    personalIndex = new EasySearch.Index({
+        collection: Personaldto,
+        fields: ['apellidos', 'nombre'],
+        engine: new EasySearch.Minimongo()
     });
 
 Inventario.allow({
