@@ -14,6 +14,7 @@
                 </fieldset>
                 <button type="submit" class="btn btn-primary">Insert</button>
               {{/autoForm}}
+              {{> uploadImage imageCollection="userImages" size="thumbnail" doc=currentUser classImage="tiny-img round"}}
         <a href="/personaldto"><button class="btn btn-default">&times; Cancelar</button></a>
     </div>
 </template>

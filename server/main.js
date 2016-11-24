@@ -53,3 +53,9 @@ Meteor.publish("allUsers", function(){
 Meteor.publish("activeUsers", function(){
   return Meteor.users.find({activo:"VERDADERO"});
 });
+
+Avatar.setOptions({
+
+  fallbackType: "initials"
+//  defaultImageUrl: "ava1.png"
+});

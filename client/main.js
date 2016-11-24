@@ -37,6 +37,9 @@ let
         engine: new EasySearch.Minimongo()
     });
 
+Avatar.setOptions({
+  fallbackType: "initials"
+});
 
 // set up the iron router
 Router.configure({
@@ -55,7 +58,11 @@ Router.route('/home/', function () {
     this.render('home', {to:"main"});
     
 });
-
+Router.route('/profile/', function () {
+    console.log("Estamos en el /profile");
+    this.render('navbar', {to:"header"});
+    this.render('profile', {to:"main"});
+});
 Router.route('/personal/', function () {
     console.log("Estamos en el /personal");
     this.render('navbar', {to:"header"});
@@ -141,11 +148,21 @@ Router.route('/personaldto/trash/:_id', function(){
 });
 
 Template.navbar.helpers({
-      
      email: function(){
         return Meteor.user().emails[0].address;
-    }
-  }),  
+     },
+     user: function(){
+        return Meteor.user();
+     }
+  }),
+Template.profile.helpers({
+     email: function(){
+        return Meteor.user().emails[0].address;
+     },
+     user: function(){
+        return Meteor.user();
+     }
+  }), 
 
 Template.listaPersonal.helpers({
 //       profesores: Profesores.find({}, {sort:{Apellidos: 1, Nombre: 1}})
@@ -504,7 +521,7 @@ Template.inventarioEdit.events({
                                             widths: [ 500 ],
                                             body: [ 
                                                     [{ text: 'ORGÁNICA PROYECTO: '+this.orgProy , style: 'subheader', rowSPan: 2 }],
-                                                    [{ text: 'CÓDIGO DE PROYECTO(a cumplimentar por investihación): ', style: 'subheader' }],
+                                                    [{ text: 'CÓDIGO DE PROYECTO(a cumplimentar por investigación): ', style: 'subheader' }],
                                                     [{ text: 'Nº DE PROYECTO: '+this.nProy, style: 'subheader', rowSPan: 2 }],
                                                     [{ text: 'TÍTULO DEL PROYECTO: '+this.titProy , style: 'subheader' }]
                                                 ]
