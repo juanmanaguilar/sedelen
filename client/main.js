@@ -561,7 +561,7 @@ Template.inventarioEdit.events({
                     fontSize: 8,
                     margin: 5,
                     columns: [
-                        { text: 'Firma y sello del\nresponsable funcional\n\n\n\nFdo: Antonio Ruiz Cortés'},
+                        { text: 'Firma y sello del\nresponsable funcional\n\n\n\nFdo: Carmelo del Valle Sevillano'},
                         { text: 'LA UNIDAD DE\nINVENTARIO'}
                     ]
                 }

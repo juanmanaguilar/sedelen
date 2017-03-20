@@ -56,6 +56,6 @@ Meteor.publish("activeUsers", function(){
 
 Avatar.setOptions({
 
-  fallbackType: "initials"
-//  defaultImageUrl: "ava1.png"
+  fallbackType: "initials",
+  defaultImageUrl: "ava1.png"
 });
